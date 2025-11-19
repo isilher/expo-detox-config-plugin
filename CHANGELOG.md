@@ -1,5 +1,26 @@
 # Changelog
 
+## 12.0.0 (2025-11-XX)
+
+### Expo SDK 54 Support
+
+**Breaking Changes:**
+- Updated to support Expo SDK 54
+- Minimum required versions:
+  - Expo SDK 54.0.0+
+  - React Native 0.81+
+  - Detox 20.46.0+
+  - Node 20.19.4+
+
+**Dependency Updates:**
+- `expo` peer dependency: `^53.0.0` → `^54.0.0`
+- `@expo/config-plugins` peer dependency: `~9.0.0` → `~54.0.0`
+- `expo-build-properties`: `^0.13.1` → `^1.0.9`
+- `typescript`: `^5.1.3` → `^5.9.2`
+
+**Migration:**
+Users on Expo SDK 53 should continue using version 11.x of this package.
+
 ## 11.0.0 (2025-01-XX)
 
 ### Community Fork

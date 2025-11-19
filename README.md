@@ -6,10 +6,12 @@ Config plugin to auto-configure Detox when the native code is generated (`npx ex
 
 ## Requirements
 
-- **Expo SDK:** 53.0.0 or higher
-- **Detox:** 20.37.0 or higher
+- **Expo SDK:** 54.0.0 or higher
+- **React Native:** 0.81 or higher
+- **Detox:** 20.46.0 or higher
+- **Node:** 20.19.4 or higher
 
-> **Note:** For older Expo SDK versions (50-52), please use the original [@config-plugins/detox](https://www.npmjs.com/package/@config-plugins/detox) package from the expo/config-plugins repository.
+> **Note:** For Expo SDK 53, use version 11.x of this package. For older SDK versions (50-52), use the original [@config-plugins/detox](https://www.npmjs.com/package/@config-plugins/detox) package from the expo/config-plugins repository.
 
 ## Installation
 
