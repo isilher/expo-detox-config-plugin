@@ -2,7 +2,7 @@ import {
   type ConfigPlugin,
   createRunOncePlugin,
   withPlugins,
-} from "expo/config-plugins";
+} from "@expo/config-plugins";
 
 import withDetoxProjectGradle from "./withDetoxProjectGradle";
 import withDetoxTestAppGradle from "./withDetoxTestAppGradle";
