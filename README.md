@@ -4,86 +4,103 @@
 
 Config plugin to auto-configure Detox when the native code is generated (`npx expo prebuild`).
 
-## Versioning
+## Requirements
 
-Ensure you use versions that work together!
+- **Expo SDK:** 53.0.0 or higher
+- **Detox:** 20.37.0 or higher
 
-| `expo` | `detox` | `@config-plugins/detox` |
-| ------ | ------- | ----------------------- |
-| 53.0.0 | 20.37.0 | ^10.0.0                 |
-| 52.0.0 | 20.28.0 | ^9.0.0                  |
-| 51.0.0 | 20.20.3 | ^8.0.0                  |
-| 50.0.0 | 20.17.0 | ^7.0.0                  |
-| 49.0.0 | 20.11.0 | ^6.0.0                  |
-| 48.0.0 | 20.5.0  | ^5.0.0                  |
-| 47.0.0 | 19.13.0 | ^4.0.0                  |
-| 46.0.0 | 19.9.0  | ^3.0.0                  |
-| 45.0.0 | 19.6.9  | ^2.0.0                  |
-| 44.0.0 | 19.1.0  | ^1.1.0                  |
-| 43.0.0 | 19.1.0  | ~1.0.0                  |
-| 40.0.0 | 18.6.2  | ~0.0.0                  |
+> **Note:** For older Expo SDK versions (50-52), please use the original [@config-plugins/detox](https://www.npmjs.com/package/@config-plugins/detox) package from the expo/config-plugins repository.
 
-Most notably, the minimum required Kotlin version changed from `1.3.50` in SDK 40 to `1.4.21` in SDK 43. Failure to use the correct versioning could result in Android build errors like `Execution failed for task ':react-native-screens:compileDebugKotlin'.` or `Execution failed for task ':expo:compileDebugKotlin'.`.
+## Installation
 
-### Add the package to your npm dependencies
+Install the package along with Detox:
 
-First install the package with yarn, npm, or [`npx expo install`](https://docs.expo.io/workflow/expo-cli/#expo-install).
-
-```
+```bash
 npx expo install detox @config-plugins/detox
 ```
 
-Detox is an end-to-end (e2e) testing library for iOS and Android. You can use it to automate usage of your native project. This example demonstrates how to use Detox and Jest in a native project that you build locally.
+## Setup
 
-## 🚀 How to use
+1. Add the plugin to your `app.json` or `app.config.js`:
 
-- Install with `yarn` or `npm install`
-  - Install iOS packages: `npx pod-install`
-- Run `yarn e2e:ios` to build and test the iOS app on a simulator (macOS only).
-  - This combines `yarn build:ios` and `yarn test:ios`.
-  - You can run `yarn test:ios --watch` after building to keep the tests in watch mode.
-- Run `yarn e2e:android` to build and test the Android app on a Google emulator (Genymotion requires extra config).
-  - This combines `yarn build:android` and `yarn test:android`.
-  - You can run `yarn test:android --watch` after building to keep the tests in watch mode.
-- Run `yarn e2e:android-release` to build and test the Android app in release mode.
+   ```json
+   {
+     "expo": {
+       "plugins": ["@config-plugins/detox"]
+     }
+   }
+   ```
 
-## Recreate this example
+2. Install additional testing dependencies:
 
-- `npx create-react-native-app -t blank`
-  - `cd` into the project
-- Install packages:
-  - `yarn add -D detox @config-plugins/detox @babel/core @babel/runtime @types/jest babel-jest jest jest-circus ts-jest`
-  - touch `tsconfig.json`
-  - Run `expo start` to ensure TS is setup correctly.
-- Add the following plugin to your `app.json` plugins array (before prebuilding). This'll automatically configure the Android native code to support Detox:
-  ```json
-  {
-    "plugins": ["@config-plugins/detox"]
-  }
-  ```
-- Generate the native code `npx expo prebuild`
-- Run `yarn detox init -r jest`
+   ```bash
+   yarn add -D @babel/core @babel/runtime @types/jest babel-jest jest jest-circus ts-jest
+   ```
 
-## API
+3. Generate the native code:
+
+   ```bash
+   npx expo prebuild
+   ```
+
+4. Initialize Detox configuration:
+
+   ```bash
+   yarn detox init -r jest
+   ```
+
+5. For iOS, install pods:
+
+   ```bash
+   npx pod-install
+   ```
+
+## Configuration
 
 The plugin provides props for extra customization. Every time you change the props or plugins, you'll need to rebuild (and `prebuild`) the native app. If no extra properties are added, defaults will be used.
 
-- `skipProguard` (_boolean_): Disable adding proguard minification to the `app/build.gradle`. Defaults to `false`.
-- `subdomains` (_string[] | '\*'_): Hostnames to add to the network security config. Pass `'*'` to allow all domains. Defaults to `['10.0.2.2', 'localhost']`.
+### Options
 
-`app.config.js`
+- **`skipProguard`** (_boolean_): Disable adding proguard minification to the `app/build.gradle`. Defaults to `false`.
+- **`subdomains`** (_string[] | '\*'_): Hostnames to add to the network security config. Pass `'*'` to allow all domains. Defaults to `['10.0.2.2', 'localhost']`.
 
-```ts
+### Example Configuration
+
+**app.config.js:**
+
+```js
 export default {
-  plugins: [
-    [
-      "@config-plugins/detox",
-      {
-        skipProguard: false,
-        subdomains: ["10.0.2.2", "localhost"],
-      },
+  expo: {
+    plugins: [
+      [
+        "@config-plugins/detox",
+        {
+          skipProguard: false,
+          subdomains: ["10.0.2.2", "localhost"],
+        },
+      ],
     ],
-  ],
+  },
+};
+```
+
+**Advanced example with environment-based configuration:**
+
+```js
+module.exports = {
+  expo: {
+    plugins: [
+      [
+        "@config-plugins/detox",
+        {
+          subdomains:
+            process.env.EAS_BUILD_PROFILE === "development"
+              ? "*"
+              : ["10.0.2.2", "localhost"],
+        },
+      ],
+    ],
+  },
 };
 ```
 
@@ -134,23 +151,7 @@ If you get the error:
 CLEARTEXT communication to [some host] not permitted by network security policy
 ```
 
-This means you're attempting to connecting over plain HTTP (not HTTPS) to a host that _isn't_ in your `subdomains` settings (defaults to `['10.0.2.2', 'localhost']`). Set your subdomain settings appropriately. For example, if you're building Detox into a dev-client, you'll want to make sure you can connect to your Metro server:
-
-```javascript
-module.exports = {
-  plugins: [
-    [
-      "@config-plugins/detox",
-      {
-        subdomains:
-          process.env.EAS_BUILD_PROFILE === "development"
-            ? "*"
-            : ["10.0.2.2", "localhost"],
-      },
-    ],
-  ],
-};
-```
+This means you're attempting to connect over plain HTTP (not HTTPS) to a host that _isn't_ in your `subdomains` settings (defaults to `['10.0.2.2', 'localhost']`). See the [Configuration](#configuration) section above for examples on how to configure `subdomains`, including how to allow all domains with `"*"` for development builds.
 
 ## 📝 Notes
 

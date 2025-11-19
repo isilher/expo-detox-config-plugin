@@ -1,23 +1,27 @@
-### @config-plugins/detox 5.0.0
+# Changelog
 
-- Expo SDK 48 support
+## 11.0.0 (2025-01-XX)
 
-### @config-plugins/detox [1.2.3](https://github.com/expo/config-plugins/compare/@config-plugins/detox@1.2.2...@config-plugins/detox@1.2.3) (2022-03-22)
+### Community Fork
 
-### Other chores
+This package is now community maintained after being removed from the official [expo/config-plugins](https://github.com/expo/config-plugins) repository.
 
-- git ignore build folders ([#59](https://github.com/expo/config-plugins/issues/59)) ([d6050be](https://github.com/expo/config-plugins/commit/d6050beb2a5c68dc59287c27ec388c2002ec7904))
+**Initial Release:**
+- Supports Expo SDK 53+
+- Supports Detox 20.37.0+
+- Extracted from expo/config-plugins@2387fa9
+- Auto-configures Detox for Android when running `npx expo prebuild`
 
-### @config-plugins/detox [1.2.2](https://github.com/expo/config-plugins/compare/@config-plugins/detox@1.2.1...@config-plugins/detox@1.2.2) (2022-03-16)
+**Features:**
+- Configures Android Gradle files for Detox support
+- Generates Detox test class
+- Manages network security config for Android
+- Optional Proguard configuration
 
-### Bug Fixes
+**Configuration Options:**
+- `skipProguard` - Disable proguard minification
+- `subdomains` - Configure allowed domains for network security
 
-- **detox:** use improved xml generation ([#47](https://github.com/expo/config-plugins/issues/47)) ([6324eb0](https://github.com/expo/config-plugins/commit/6324eb041b3b4eb2318c0a1ea0297e3b7bf28f7c))
+---
 
-### @config-plugins/detox [1.2.1](https://github.com/expo/config-plugins/compare/@config-plugins/detox@1.2.0...@config-plugins/detox@1.2.1) (2022-03-16)
-
-### Continuous Integration
-
-- fix versions [skip ci] ([#53](https://github.com/expo/config-plugins/issues/53)) ([5de4ae3](https://github.com/expo/config-plugins/commit/5de4ae3e6182c32b7aa24d70ccd23a11663bb089))
-
-### @config-plugins/detox 1.2.0
+For historical changes prior to the community fork, see the [original repository](https://github.com/expo/config-plugins/tree/2387fa9/packages/detox).
