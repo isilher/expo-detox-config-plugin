@@ -1,48 +1,53 @@
 # Changelog
 
-## 12.0.0 (2025-11-XX)
+## 12.0.0
 
-### Expo SDK 54 Support
+### Initial Release for Expo SDK 54+
 
-**Breaking Changes:**
-- Updated to support Expo SDK 54
-- Minimum required versions:
-  - Expo SDK 54.0.0+
-  - React Native 0.81+
-  - Detox 20.46.0+
-  - Node 20.19.4+
+This is a community-maintained config plugin for Detox, supporting **Expo SDK 54 and above**. The official Expo team removed Detox support from their config-plugins repository, and this fork continues support starting from SDK 54.
 
-**Dependency Updates:**
-- `expo` peer dependency: `^53.0.0` → `^54.0.0`
-- `@expo/config-plugins` peer dependency: `~9.0.0` → `~54.0.0`
-- `expo-build-properties`: `^0.13.1` → `^1.0.9`
-- `typescript`: `^5.1.3` → `^5.9.2`
-
-**Migration:**
-Users on Expo SDK 53 should continue using version 11.x of this package.
-
-## 11.0.0 (2025-01-XX)
-
-### Community Fork
-
-This package is now community maintained after being removed from the official [expo/config-plugins](https://github.com/expo/config-plugins) repository.
-
-**Initial Release:**
-- Supports Expo SDK 53+
-- Supports Detox 20.37.0+
-- Extracted from expo/config-plugins@2387fa9
-- Auto-configures Detox for Android when running `npx expo prebuild`
+**Supported Versions:**
+- Expo SDK: 54.0.0+
+- React Native: 0.81+
+- Detox: 20.44.0+ (required for React Native 0.81 support)
+- Node: 20.19.4+
 
 **Features:**
-- Configures Android Gradle files for Detox support
-- Generates Detox test class
-- Manages network security config for Android
-- Optional Proguard configuration
+- Auto-configures Android and iOS projects for Detox testing
+- Adds Detox dependencies to Gradle and Podfile
+- Configures test instrumentation runner
+- Adds ProGuard rules for release builds
+- **Resolves AndroidX Test dependency conflicts** with automatic version resolution strategy
+- Manages network security config for Android test environments
 
 **Configuration Options:**
-- `skipProguard` - Disable proguard minification
-- `subdomains` - Configure allowed domains for network security
+- `skipProguard` (_boolean_) - Disable proguard minification (default: `false`)
+- `subdomains` (_string[] | '*'_) - Configure allowed domains for network security (default: `['10.0.2.2', 'localhost']`)
+
+**Technical Changes:**
+- Updated peer dependencies for SDK 54:
+  - `expo`: `^54.0.0`
+  - `@expo/config-plugins`: `~54.0.0`
+- Updated dependencies:
+  - `expo-build-properties`: `^1.0.9`
+  - `typescript`: `^5.9.2`
+- Added Gradle dependency resolution strategy to force compatible AndroidX Test versions
+- Removed explicit AndroidX Test dependencies (now handled transitively by Detox)
+
+**Package Name:**
+This package is published as `expo-detox-config-plugin` on npm.
+
+**For Expo SDK 53 and below:**
+Please use the original [@config-plugins/detox](https://www.npmjs.com/package/@config-plugins/detox) package from the expo/config-plugins repository.
 
 ---
 
-For historical changes prior to the community fork, see the [original repository](https://github.com/expo/config-plugins/tree/2387fa9/packages/detox).
+## Previous Versions
+
+This package is a continuation of the official Detox config plugin that was maintained by the Expo team until SDK 53. For historical changes and versions prior to SDK 54, see the [original expo/config-plugins repository](https://github.com/expo/config-plugins).
+
+---
+
+## Acknowledgments
+
+Special thanks to [@EvanBacon](https://github.com/EvanBacon) and the Expo team for their excellent work creating and maintaining the original Detox config plugin through SDK 53. This community fork builds upon their solid foundation.

@@ -1,15 +1,19 @@
 {
-  "name": "@config-plugins/detox",
+  "name": "expo-detox-config-plugin",
   "version": "12.0.0",
-  "description": "Config plugin to auto configure detox on prebuild (community maintained)",
+  "description": "Expo config plugin for Detox E2E testing (SDK 54+, community maintained)",
   "main": "build/withDetox.js",
   "types": "build/withDetox.d.ts",
   "license": "MIT",
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/config-plugin-detox.git"
+    "url": "https://github.com/isilher/expo-detox-config-plugin.git"
   },
+  "bugs": {
+    "url": "https://github.com/isilher/expo-detox-config-plugin/issues"
+  },
+  "homepage": "https://github.com/isilher/expo-detox-config-plugin#readme",
   "files": [
     "build",
     "app.plugin.js",
