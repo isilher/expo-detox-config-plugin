@@ -16,6 +16,9 @@ const withDetoxTestAppGradle: ConfigPlugin = (config) => {
       config.modResults.contents = addDetoxDefaultConfigBlock(
         config.modResults.contents,
       );
+      config.modResults.contents = addDependencyResolutionStrategy(
+        config.modResults.contents,
+      );
     } else {
       throw new Error(
         "Cannot add Detox maven gradle because the project build.gradle is not groovy",
@@ -30,13 +33,16 @@ export function setGradleAndroidTestImplementation(
 ): string {
   buildGradle = pushGradleDependency(
     buildGradle,
-    // SDK 50 https://github.com/wix/Detox/blob/700b750e8a09b2eff2d26c0dbf3c50b70130fc9b/examples/demo-react-native/android/app/build.gradle#L61
     "implementation 'androidx.appcompat:appcompat:1.6.1'",
   );
+
+  // Detox dependency (20.44.0+ required for React Native 0.81 support)
+  // AndroidX Test dependencies come transitively from Detox
   buildGradle = pushGradleDependency(
     buildGradle,
     "androidTestImplementation('com.wix:detox:+')",
   );
+
   return buildGradle;
 }
 
@@ -72,6 +78,31 @@ export function addDetoxDefaultConfigBlock(buildGradle: string): string {
         testBuildType System.getProperty('testBuildType', 'debug')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'`,
   );
+}
+
+export function addDependencyResolutionStrategy(buildGradle: string): string {
+  const pattern = /detox-plugin-resolution-strategy/g;
+  if (buildGradle.match(pattern)) {
+    return buildGradle;
+  }
+
+  // Force androidx.test dependency versions to match what Detox expects
+  // This resolves conflicts when other dependencies require older versions
+  const resolutionStrategy = `
+    // detox-plugin-resolution-strategy
+    configurations.all {
+        resolutionStrategy {
+            force 'androidx.test:core:1.6.1'
+            force 'androidx.test:runner:1.6.1'
+            force 'androidx.test:rules:1.6.1'
+            force 'androidx.test:monitor:1.7.1'
+            force 'androidx.test.ext:junit:1.2.1'
+            force 'androidx.test.espresso:espresso-core:3.6.1'
+        }
+    }
+`;
+
+  return buildGradle.replace(/android\s*{/, `android {${resolutionStrategy}`);
 }
 
 export default withDetoxTestAppGradle;
