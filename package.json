@@ -1,7 +1,7 @@
 {
   "name": "expo-detox-config-plugin",
-  "version": "12.0.0",
-  "description": "Expo config plugin for Detox E2E testing (SDK 54+, community maintained)",
+  "version": "13.0.0",
+  "description": "Expo config plugin for Detox E2E testing (SDK 57+, community maintained)",
   "main": "build/withDetox.js",
   "types": "build/withDetox.d.ts",
   "license": "MIT",
@@ -37,15 +37,15 @@
     "config-plugin"
   ],
   "peerDependencies": {
-    "@expo/config-plugins": "~54.0.0",
-    "expo": "^54.0.0"
-  },
-  "dependencies": {
-    "expo-build-properties": "^1.0.9"
+    "@expo/config-plugins": ">=54.0.0",
+    "expo": ">=54.0.0"
   },
   "devDependencies": {
-    "@expo/config-plugins": "~54.0.0",
+    "@expo/config-plugins": "~57.0.0",
+    "@react-native/jest-preset": "^0.87.0",
+    "expo": "^57.0.0",
     "expo-module-scripts": "^4.1.6",
+    "jest": "^30.4.2",
     "typescript": "^5.9.2"
   },
   "upstreamPackage": "detox"
