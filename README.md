@@ -8,7 +8,7 @@ This plugin is designed for **Expo SDK 54 and above**.
 
 | Expo SDK | Use This Package |
 |----------|------------------|
-| **≥ 54** | `expo-detox-config-plugin@^12.0.0` (this package) |
+| **≥ 54** | `expo-detox-config-plugin@^13.0.0` (this package) |
 | **≤ 53** | Original package from [expo/config-plugins](https://www.npmjs.com/package/@config-plugins/detox) |
 
 > **Note:** The official Expo team removed Detox support from their config-plugins repository. This community-maintained fork continues support starting from SDK 54.
@@ -18,7 +18,7 @@ This plugin is designed for **Expo SDK 54 and above**.
 - **Expo SDK:** 54.0.0 or higher
 - **React Native:** 0.81 or higher
 - **Detox:** 20.44.0 or higher (required for React Native 0.81 support)
-- **Node:** 20.19.4 or higher
+- **Node:** 22.13.0 or higher
 
 ## Installation
 

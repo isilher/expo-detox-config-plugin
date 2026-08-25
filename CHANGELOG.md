@@ -1,5 +1,23 @@
 # Changelog
 
+## 13.0.0
+
+### Expo SDK 57 Support
+
+**Supported Versions:**
+- Expo SDK: 54.0.0+
+- React Native: 0.81+
+- Detox: 20.44.0+ (required for React Native 0.81 support)
+- Node: 22.13.0+
+
+**Changes:**
+- Widened peer dependency ranges to `>=54.0.0` for both `@expo/config-plugins` and `expo`, so a single version of the plugin works across SDK 54–57+
+- Removed unused `expo-build-properties` runtime dependency — the plugin never imported it, and dropping it eliminates a redundant install
+- Updated dev dependencies to SDK 57 (`@expo/config-plugins@~57.0.0`, `expo@^57.0.0`, `jest@^30.4.2`, `@react-native/jest-preset@^0.87.0`)
+- Updated publish workflow to Node 22 (required by `@react-native/jest-preset@0.87`)
+
+---
+
 ## 12.0.0
 
 ### Initial Release for Expo SDK 54+
