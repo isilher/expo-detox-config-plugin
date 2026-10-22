@@ -17,7 +17,10 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          # Node 24 ships npm 11, which trusted publishing (OIDC) needs; Node
+          # 22's npm 10 published without credentials and got a 404.
+          node-version: '24'
+          check-latest: true
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
