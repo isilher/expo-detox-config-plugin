@@ -1,5 +1,25 @@
 # Changelog
 
+## 13.1.0
+
+### Expo SDK 58 support and ProGuard fixes for minified release builds
+
+**Supported Versions:**
+- Expo SDK: 54.0.0+ (verified on SDK 58 / React Native 0.88)
+- React Native: 0.81+
+- Detox: 20.44.0+ (verified with 20.51.4)
+- Node: 22.13.0+
+
+**Changes:**
+- Updated dev dependencies to SDK 58 (`@expo/config-plugins@~58.0.0`, `expo@^58.0.0`, `@react-native/jest-preset@^0.88.0`)
+
+**Fixes:**
+- Detox's ProGuard rules were never added to Expo templates. The plugin only matched `getDefaultProguardFile("proguard-android.txt")`, while Expo's template uses `proguard-android-optimize.txt`, so the step silently did nothing. Both variants now match, and prebuild warns when neither is found.
+- Adds `proguard-rules-detox.pro`, which keeps `kotlin.**` and `kotlinx.coroutines.**`. The androidTest APK uses the app's copies of these libraries. With AGP 9 (Expo SDK 58), R8 stripped classes Detox calls but its own rules miss, such as `kotlin.TuplesKt`. The Detox client then died on its first command: "Detox can't seem to connect to the test app(s)".
+- Projects prebuilt with an earlier version (Detox's rules only) get the new rules on the next prebuild, without a duplicate Detox block.
+
+---
+
 ## 13.0.0
 
 ### Expo SDK 57 Support

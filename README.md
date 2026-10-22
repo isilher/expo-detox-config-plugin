@@ -6,12 +6,15 @@ Config plugin to auto-configure Detox when the native code is generated (`npx ex
 
 This plugin is designed for **Expo SDK 54 and above**.
 
-| Expo SDK | Use This Package |
-|----------|------------------|
-| **≥ 54** | `expo-detox-config-plugin@^13.0.0` (this package) |
-| **≤ 53** | Original package from [expo/config-plugins](https://www.npmjs.com/package/@config-plugins/detox) |
+| Expo SDK | React Native | Use This Package |
+|----------|--------------|------------------|
+| **58** | 0.88 | `expo-detox-config-plugin@^13.1.0` (this package) |
+| **54 – 57** | 0.81 – 0.87 | `expo-detox-config-plugin@^13.1.0` (this package) |
+| **≤ 53** | ≤ 0.79 | Original package from [expo/config-plugins](https://www.npmjs.com/package/@config-plugins/detox) |
 
 > **Note:** The official Expo team removed Detox support from their config-plugins repository. This community-maintained fork continues support starting from SDK 54.
+
+> **SDK 58 / minified release builds:** use 13.1.0 or later. Earlier versions never added the ProGuard rules to Expo templates, and from SDK 58 (AGP 9) R8 strips Kotlin classes Detox needs, so the Detox client dies on its first command ("Detox can't seem to connect to the test app(s)").
 
 ## Requirements
 
@@ -70,7 +73,7 @@ The plugin provides props for extra customization. Every time you change the pro
 
 ### Options
 
-- **`skipProguard`** (_boolean_): Disable adding proguard minification to the `app/build.gradle`. Defaults to `false`.
+- **`skipProguard`** (_boolean_): Don't add the Detox ProGuard rules to the release build type in `app/build.gradle`. Defaults to `false`.
 - **`subdomains`** (_string[] | '\*'_): Hostnames to add to the network security config. Pass `'*'` to allow all domains. Defaults to `['10.0.2.2', 'localhost']`.
 
 ### Example Configuration
@@ -120,7 +123,7 @@ This plugin automatically configures your Android and iOS projects for Detox tes
 ### Android
 - Adds Detox dependency to `app/build.gradle`
 - Configures test instrumentation runner
-- Adds ProGuard rules for release builds
+- Adds ProGuard rules for release builds: Detox's own rules, plus keeps for the Kotlin stdlib and `kotlinx.coroutines`, which the Detox test APK uses from the app
 - **Resolves AndroidX Test dependency conflicts** by forcing compatible versions
 - Configures network security for test environments
 
